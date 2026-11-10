@@ -16,3 +16,21 @@ rpm -K /tmp/jenkins.rpm
 dnf install -y /tmp/jenkins.rpm
 systemctl enable --now jenkins
 systemctl status jenkins
+
+
+claude code
+
+sudo dnf update -y
+sudo dnf install -y java-21-amazon-corretto-headless fontconfig wget
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/rpm-stable/jenkins.repo
+sudo rpm --import $(grep ^gpgkey /etc/yum.repos.d/jenkins.repo | cut -d= -f2)
+
+sudo dnf clean all
+sudo dnf install -y jenkins
+
+# check it really installed before starting
+rpm -q jenkins
+
+sudo systemctl enable --now jenkins
+sudo systemctl status jenkins

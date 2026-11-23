@@ -19,3 +19,30 @@ systemctl daemon-reload
 systemctl enable jenkins
 systemctl start jenkins
 systemctl status jenkins
+
+script
+
+#!/bin/bash
+
+set -e
+
+echo "======================================"
+echo " Starting Jenkins Installation"
+echo "======================================"
+
+dnf update -y
+dnf install java-21-amazon-corretto-devel -y
+dnf install fontconfig wget curl ca-certificates -y
+java -version
+rpm --import https://pkg.jenkins.io/rpm-stable/jenkins.io-2026.key
+curl -fL https://pkg.jenkins.io/rpm-stable/jenkins.repo \
+-o /etc/yum.repos.d/jenkins.repo
+dnf clean all
+dnf makecache
+dnf install jenkins -y
+systemctl daemon-reload
+systemctl enable jenkins
+systemctl start jenkins
+systemctl status jenkins --no-pager
+
+
